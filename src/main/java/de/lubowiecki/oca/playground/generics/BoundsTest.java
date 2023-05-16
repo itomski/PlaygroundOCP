@@ -39,7 +39,6 @@ public class BoundsTest {
         Predicate<Object> pred2 = (obj) -> obj.hashCode() > 0;
         pred1 = pred1.and(pred2);
 
-
     }
 }
 
