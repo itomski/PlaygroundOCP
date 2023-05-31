@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class CalApp {
 
     private final Scanner scanner = new Scanner(System.in);
-    private final TerminRepository repository = new TerminRepository();
+    private final Repository<Termin> repository = new TerminRepository();
 
     private static final String TBL_ROW = "| %-10s | %-5s | %-20s | %-50s | \n";
 

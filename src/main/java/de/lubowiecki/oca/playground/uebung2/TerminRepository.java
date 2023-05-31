@@ -3,7 +3,7 @@ package de.lubowiecki.oca.playground.uebung2;
 import java.time.LocalDate;
 import java.util.*;
 
-public class TerminRepository {
+public class TerminRepository implements Repository<Termin> {
 
     private Map<LocalDate,Termin> termine = new TreeMap<>();
 
