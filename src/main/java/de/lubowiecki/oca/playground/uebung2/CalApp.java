@@ -3,6 +3,7 @@ package de.lubowiecki.oca.playground.uebung2;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Scanner;
+import java.util.function.Consumer;
 
 public class CalApp {
 
@@ -45,9 +46,15 @@ public class CalApp {
 
                     System.out.printf(TBL_ROW, "Datum", "Zeit", "Titel", "Beschreibung");
                     System.out.print(DIVIDER);
+                    /*
                     for(Termin t : repository.fildAll()) {
                         System.out.printf(TBL_ROW, t.getDatum(), t.getZeit(), t.getTitel(), t.getBeschreibung());
                     }
+                    */
+
+                    // void accept(T t);
+                    Consumer<Termin> consumer = t -> System.out.printf(TBL_ROW, t.getDatum(), t.getZeit(), t.getTitel(), t.getBeschreibung());
+                    repository.fildAll().forEach(consumer);
                     break;
 
                 case "q":
