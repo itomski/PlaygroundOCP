@@ -1,6 +1,7 @@
 package de.lubowiecki.oca.playground.jdbc;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -9,28 +10,19 @@ public class UserCrud implements Crud<User> {
 
     @Override
     public List<User> findAll() throws SQLException {
-
-        List<User> list = new ArrayList<>();
-
-        // TODO: Zugangsdaten an eine zentralle Stelle auslagern
-        final String url = "jdbc:mysql://localhost:8889/startdb";
-
-        try(Connection connection = DriverManager.getConnection(url, "root", "root");
-            Statement stmt = connection.createStatement()) {
-
-            ResultSet results = stmt.executeQuery("SELECT * FROM users");
-            while(results.next()) {
-                list.add(create(results));
-            }
-        }
-
-        return list;
+        return findAll("users", null);
     }
 
     @Override
-    public Optional<User> findById() throws SQLException {
-        return Optional.empty();
+    public Optional<User> findById(int id) throws SQLException {
+        return findAll("users", "WHERE id = " + id).stream().findFirst();
     }
+
+    public List<User> findByBirthdate(LocalDate date) throws SQLException {
+        return findAll("users", "WHERE birthdate = '" + date + "'");
+    }
+
+    // INSERT INTO users (id, firstname, lastname, birthdate) VALUES(null, 'Max', 'Mustermann', '2000-05-10');
 
     @Override
     public User insert(User user) throws SQLException {
@@ -43,13 +35,8 @@ public class UserCrud implements Crud<User> {
     }
 
     @Override
-    public boolean delete(User user) throws SQLException {
-        return false;
-    }
-
-    @Override
     public boolean deleteById(int id) throws SQLException {
-        return false;
+        return delete("users", id);
     }
 
     @Override
