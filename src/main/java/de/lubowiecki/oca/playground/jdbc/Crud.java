@@ -17,7 +17,11 @@ public interface Crud<T extends AbstractEntity> {
         List<T> list = new ArrayList<>();
 
         try(Connection connection = DbConnectionFactory.getConnection();
-            Statement stmt = connection.createStatement()) {
+            //Statement stmt = connection.createStatement()
+            Statement stmt = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
+
+            // ResultSet.TYPE_SCROLL_INSENSITIVE = wir können sich im ResultSet beliebig bewegen
+            // ResultSet.CONCUR_UPDATABLE = Daten können geändert und erweitert werden - Änderungen werden in die DB geschreiben
 
             StringBuilder sb = new StringBuilder("SELECT * FROM ");
 
@@ -27,7 +31,20 @@ public interface Crud<T extends AbstractEntity> {
             if(ext != null)
                 sb.append(" ").append(ext);
 
-            ResultSet results = stmt.executeQuery(sb.toString());
+            // ResultSet results = stmt.executeQuery(sb.toString()); // Liefert den ResultSet
+            stmt.execute(sb.toString());
+            ResultSet results = stmt.getResultSet();
+
+            /*
+            results.next(); // versetzt den Cursor auf die nähste Zeile
+            // ResultSet muss scrollable sein
+            results.absolute(10); // versetzt den Cursor auf die Zeile 10
+            results.beforeFirst(); // versetzt den Cursor vor die erste Zeile
+            results.afterLast(); // versetzt den Cursor hinter die letzte Zeile
+            results.previous(); // versetzt den Cursor eine Zeile zurück
+            results.relative(2); // Versetzt den Cursor zei Zeilen vorwärts
+            */
+
             while(results.next()) {
                 list.add(create(results));
             }
@@ -61,7 +78,10 @@ public interface Crud<T extends AbstractEntity> {
             if(id > 0)
                 sql.append(" WHERE id = ").append(id);
 
-            return stmt.executeUpdate(sql.toString()) > 0;
+            // return stmt.executeUpdate(sql.toString()) > 0; // Liefert einen Updatecount
+
+            stmt.execute(sql.toString());
+            return  stmt.getUpdateCount() > 0;
 
         }
     }
