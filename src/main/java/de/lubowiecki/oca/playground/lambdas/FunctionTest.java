@@ -3,6 +3,7 @@ package de.lubowiecki.oca.playground.lambdas;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
+import java.util.function.UnaryOperator;
 
 public class FunctionTest {
 
@@ -43,6 +44,17 @@ public class FunctionTest {
         // IntToDoubleFunction : primitiv int wird zu primitiv double umgewandelt
         // ToIntFunction<T> : Generischer Typ wird zu primitiv int umgewandelt
 
+        System.out.println();
+
+        zahlen = new ArrayList<>(List.of(1.0,5.0,27.99,18.15,6.0,19.22,22.99,1000.0,109.2,22.17));
+
+        // UnaryOperator<Double> ist das gleiche wie Function<Double, Double>
+        // Function<Double, Double> : R apply(T t)
+        // UnaryOperator<Double> : T apply(T t)
+        UnaryOperator<Double> uo = w -> w * 2;
+        System.out.println(zahlen);
+        zahlen.replaceAll(uo);
+        System.out.println(zahlen);
 
     }
 
