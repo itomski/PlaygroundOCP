@@ -37,8 +37,8 @@ public class SerialisierungTest {
 
             save();
         }
-        catch (IOException e) {
-            System.out.println("Error: " + e.getMessage());
+        catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
         }
 
     }
@@ -51,12 +51,12 @@ public class SerialisierungTest {
         }
     }
 
-    private void load() {
+    private void load() throws IOException, ClassNotFoundException {
 
         try(ObjectInputStream in = new ObjectInputStream(new BufferedInputStream(new FileInputStream(file)))) {
             list = (List<Person>) in.readObject();
         }
-        catch (Exception e) {
+        catch (InvalidClassException | EOFException e) {
             list = new ArrayList<>();
         }
     }
