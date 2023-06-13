@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+
+// Serializable muss implementiert werden, damit die Objekte serialisierbar sind
+// Comparable<Termin> sortierung z.B. für ein TreeSet
 public class Termin implements Serializable, Comparable<Termin> {
 
     private LocalDate datum;

@@ -39,7 +39,7 @@ public class App {
         termin.setBemerkung(scanner.nextLine());
 
         try {
-            kalender.add(termin);
+            kalender.add(termin); // Aktuelle Stand der Termine wird in die Datei geschrieben
             System.out.println("\nTermin wurde gespeichert.");
         }
         catch(IOException e) {
@@ -48,7 +48,8 @@ public class App {
 
         System.out.println("----------------------------------");
 
-        // v ist die Set von Termin-Objekten
-        kalender.getAll().forEach((k, v) -> v.forEach(t -> System.out.println(t)));
+        // getAll liefert eine Map, die Tag für Tag durchlaufen wird
+        // v ist das Set von Termin-Objekten für einen bestimmten Tag
+        kalender.getAll().forEach((k, v) -> v.forEach(t -> System.out.println(t) /* Jeder Termin wird ausgegeben */));
     }
 }
