@@ -40,6 +40,7 @@ public class Kalender {
 
     private void save() throws IOException {
         try(ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(FILE_NAME))) {
+            // Serialisierungs-Datei wird beim Schreiben erzeugt, wenn sie nicht bereits existiert
             out.writeObject(termine); // Serialisiert Objekt-Strukturen d.h. Java-Objekte werden zu Text, so dass sie in eine Datei geschrieben werden können
         }
     }
