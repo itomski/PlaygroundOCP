@@ -29,8 +29,6 @@ public class FilesReadContentTest {
                 Stream<String> zeilenStr = Files.lines(path);
                 zeilenStr.filter(z -> z.length() > 0).forEach(System.out::println);
 
-
-
             }
             catch (IOException e) {
                 throw new RuntimeException(e);
