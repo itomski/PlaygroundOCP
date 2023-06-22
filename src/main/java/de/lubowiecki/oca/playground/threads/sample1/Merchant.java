@@ -15,19 +15,21 @@ public class Merchant implements Runnable {
         public void run() {
 
             while(true) {
-
-                synchronized(storage) {
-                    System.out.println(name + " will Holz entnehmen.");
-
-                    try {
-                        storage.get();
-                        System.out.println(name + " hat erfolgreich Holz abgeholt. Füllstand: " + storage.getFillLevel());
-                    } catch (RuntimeException e) {
-                        System.out.println(name + " konnte das Holz nicht abholen, da das Lager leer ist.");
-                    }
-                }
-
                 try {
+                    synchronized(storage) {
+                        System.out.println(name + " will Holz entnehmen.");
+
+                        try {
+                            storage.get();
+                            System.out.println(name + " hat erfolgreich Holz abgeholt. Füllstand: " + storage.getFillLevel());
+                            storage.notify();
+                        }
+                        catch (RuntimeException e) {
+                            System.out.println(name + " konnte das Holz nicht abholen, da das Lager leer ist.");
+                            storage.wait();
+                        }
+                    }
+
                     Thread.sleep(1000);
                 }
                 catch (InterruptedException e) {

@@ -10,6 +10,5 @@ public class ProducerConsumerProblem {
         new Thread(new Lumberjack("Carol", lager1)).start(); // Producer
 
         new Thread(new Merchant("Bruce", lager1)).start(); // Consumer
-
     }
 }
